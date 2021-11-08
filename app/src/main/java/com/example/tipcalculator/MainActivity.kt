@@ -11,9 +11,11 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import java.util.*
 
 private const val TAG="MainActivity"
 private const val INITIAL_TIP_PERCENT=15
+private const val INITIAL_BILL_SPLIT=0
 class MainActivity : AppCompatActivity() {
     private lateinit  var etBaseAmount: EditText
     private lateinit var seekBaarTip:SeekBar
@@ -21,23 +23,34 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTipAmount:TextView
     private lateinit var tvTotalAmount:TextView
     private lateinit var tvTipDescription:TextView
+    private lateinit var seekbarSplit:SeekBar
+    private lateinit var valuePerPerson:TextView
+    private lateinit var tvPerPerson:TextView
+    private lateinit var tvsplit:TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        etBaseAmount=findViewById(R.id.etBaseAmount)
-        seekBaarTip=findViewById(R.id.seekBarTip)
-        tvTipPercentLevel=findViewById(R.id.tvTipPercentLevel)
-        tvTipAmount=findViewById(R.id.tvTipAmount)
-        tvTotalAmount=findViewById(R.id.tvTotalAmount)
-        tvTipDescription=findViewById(R.id.tvTipDescription)
+        etBaseAmount = findViewById(R.id.etBaseAmount)
+        seekBaarTip = findViewById(R.id.seekBarTip)
+        tvTipPercentLevel = findViewById(R.id.tvTipPercentLevel)
+        tvTipAmount = findViewById(R.id.tvTipAmount)
+        tvTotalAmount = findViewById(R.id.tvTotalAmount)
+        tvTipDescription = findViewById(R.id.tvTipDescription)
+        valuePerPerson = findViewById(R.id.valuePerPerson)
+        tvPerPerson = findViewById(R.id.tvPerPerson)
+        seekbarSplit = findViewById(R.id.seekbarSplit)
+        tvsplit = findViewById(R.id.tvsplit)
 
-        seekBaarTip.progress= INITIAL_TIP_PERCENT
-        tvTipPercentLevel.text="$INITIAL_TIP_PERCENT%"
+
+
+        seekBaarTip.progress = INITIAL_TIP_PERCENT
+        tvTipPercentLevel.text = "$INITIAL_TIP_PERCENT%"
         updateTipDescription(INITIAL_TIP_PERCENT)
-        seekBaarTip.setOnSeekBarChangeListener(object:SeekBar.OnSeekBarChangeListener{
+        seekBaarTip.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                Log.i(TAG,"onProgressChanged$progress")
-                tvTipPercentLevel.text="$progress%"
+                Log.i(TAG, "onProgressChanged$progress")
+                tvTipPercentLevel.text = "$progress%"
                 computeTipandTotal()
                 updateTipDescription(progress)
 
@@ -51,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        etBaseAmount.addTextChangedListener(object:TextWatcher{
+        etBaseAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -59,19 +72,35 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                Log.i(TAG,"aftertextchanged $s")
+                Log.i(TAG, "aftertextchanged $s")
                 computeTipandTotal()
 
 
             }
 
         })
+       seekbarSplit.progress = INITIAL_BILL_SPLIT
+           tvsplit.text = "$INITIAL_BILL_SPLIT"
+        seekbarSplit.setOnSeekBarChangeListener(object:SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                Log.i(TAG,"Progresschanged$progress")
+                tvsplit.text="$progress"
+                computerPerPerson(progress)
+            }
 
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+
+        })
     }
+
 
     private fun updateTipDescription(TipPercent: Int) {
         val tipDescription=when(TipPercent){
-            in 0..9->"Poor"
+            in 0..9->"Poor "
             in 10..14->"Acceptable"
             in 15..19->"Good"
             in 20..24->"Great"
@@ -103,5 +132,20 @@ class MainActivity : AppCompatActivity() {
 
         tvTipAmount.text="%.2f".format(tipAmount)
         tvTotalAmount.text="%.2f".format(totalAmount)
+
+
     }
+    private fun computerPerPerson(person: Int) {
+
+        val Totalamount= tvTotalAmount.text.toString().toDouble()
+
+
+        val SplitAmount=Totalamount/person
+        valuePerPerson.text="%.2f".format(SplitAmount)
+
+    }
+
+
+
+
 }

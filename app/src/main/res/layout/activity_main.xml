@@ -10,9 +10,11 @@
         android:id="@+id/tvBaseLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="48dp"
+        android:fontFamily="@font/almendra_bold"
         android:text="Base"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,6 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/almendra_bold"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/tvBaseLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvBaseLabel"
@@ -31,7 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
+        android:fontFamily="@font/almendra_bold"
         android:text="Tip"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/tvBaseLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvTipPercentLevel" />
 
@@ -40,9 +46,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/almendra_bold"
         android:text="Total"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/tvBaseLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvTipLabel" />
+
+    <TextView
+        android:id="@+id/tvsplit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/almendra_bold"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/tvBaseLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalLabel"
+        tools:text="Split" />
+
+    <TextView
+        android:id="@+id/tvPerPerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/almendra_bold"
+        android:text="Per Person"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/tvBaseLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvsplit" />
 
     <!-- Views on right side-->
     <EditText
@@ -65,7 +95,8 @@
         android:max="30"
         app:layout_constraintBottom_toBottomOf="@+id/tvTipPercentLevel"
         app:layout_constraintStart_toStartOf="@+id/etBaseAmount"
-        app:layout_constraintTop_toTopOf="@+id/tvTipPercentLevel" />
+        app:layout_constraintTop_toTopOf="@+id/tvTipPercentLevel"
+        android:background="@color/red"/>
 
     <TextView
         android:id="@+id/tvTipAmount"
@@ -110,4 +141,28 @@
         app:layout_constraintStart_toStartOf="@+id/seekBarTip"
         app:layout_constraintTop_toBottomOf="@+id/seekBarTip"
         tools:text="Acceptable" />
+
+
+
+    <SeekBar
+        android:id="@+id/seekbarSplit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:max="4"
+        app:layout_constraintBottom_toBottomOf="@+id/tvsplit"
+        app:layout_constraintStart_toStartOf="@+id/tvTotalAmount"
+        app:layout_constraintTop_toTopOf="@+id/tvsplit"
+        android:background="@color/red"/>
+
+    <TextView
+        android:id="@+id/valuePerPerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#131010"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPerPerson"
+        app:layout_constraintStart_toStartOf="@+id/seekbarSplit"
+        app:layout_constraintTop_toTopOf="@+id/tvPerPerson"
+        tools:text="56.66" />
 </androidx.constraintlayout.widget.ConstraintLayout>
